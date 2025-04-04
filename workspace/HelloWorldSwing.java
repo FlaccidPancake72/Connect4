@@ -39,7 +39,7 @@ public class HelloWorldSwing {
         //Add the ubiquitous "Hello World" label.
         JLabel label = new JLabel("Hello World");
         frame.getContentPane().add(label);
-
+        
         //Display the window.
         frame.pack();
         frame.setVisible(true);
