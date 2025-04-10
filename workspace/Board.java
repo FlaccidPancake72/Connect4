@@ -19,71 +19,85 @@ public class Board extends JPanel {
 
 	// Logical and graphical representations of board
 	private final Square[][] board;
+    private final int row = 6;
+	private	final int col = 7;
 	private final GameWindow g;
 
 
 	public Board(GameWindow g) {
 		this.g = g;
-		board = new Square[7][6];
+		board = new Square[row][col];
 	
-		setLayout(new GridLayout(7, 6, 0, 0));
+		setLayout(new GridLayout(6, 7, 0, 0));
 
-		int row = 7;
-		int col = 6;
+		
 		int count = 0;
-		boolean isWhite = true;
-
         //TO DO on 4/9/2025 
 		for (int r = 0; r < row; r++) {
 
 			for (int c = 0; c < col; c++) {
 
-				board[r][c] = new Square(this, isWhite, c, r);
+                //    public Square(Board b, int color, int xNum, int yNum) {
+
+				board[r][c] = new Square(this, 0, c, r);
 				this.add(board[r][c]);
-				isWhite = !isWhite;
+				// isWhite = !isWhite;
 			}
-			isWhite = !isWhite;
+			// isWhite = !isWhite;
 
 		}
 
 
 
-		this.setPreferredSize(new Dimension(400, 400));
-		this.setMaximumSize(new Dimension(400, 400));
+		this.setPreferredSize(new Dimension(525 , 450));
+		this.setMaximumSize(new Dimension(525, 450));
 		this.setMinimumSize(this.getPreferredSize());
-		this.setSize(new Dimension(400, 400));
+		this.setSize(new Dimension(525, 450));
 
-		whiteTurn = true;
+		// whiteTurn = true;
 
 	}
 
     @Override
-    public void mouseClicked(MouseEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mouseClicked'");
+	public void paintComponent(Graphics g) {
+		// super.paintComponent(g);
+
+		for (int y = 0; y < row; y++) {
+			for (int x = 0; x < col; x++) {
+				Square sq = board[y][x];
+				sq.paintComponent(g);
+                sq.setBorder(BorderFactory.createLineBorder(Color.black));
+			}
+		}
     }
 
-    @Override
-    public void mousePressed(MouseEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mousePressed'");
-    }
+    // @Override
+    // public void mouseClicked(MouseEvent e) {
+    //     // TODO Auto-generated method stub
+    //     throw new UnsupportedOperationException("Unimplemented method 'mouseClicked'");
+    // }
 
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mouseReleased'");
-    }
+    // @Override
+    // public void mousePressed(MouseEvent e) {
+    //     // TODO Auto-generated method stub
+    //     throw new UnsupportedOperationException("Unimplemented method 'mousePressed'");
+    // }
 
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mouseEntered'");
-    }
+    // @Override
+    // public void mouseReleased(MouseEvent e) {
+    //     // TODO Auto-generated method stub
+    //     throw new UnsupportedOperationException("Unimplemented method 'mouseReleased'");
+    // }
 
-    @Override
-    public void mouseExited(MouseEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mouseExited'");
-    }
+    // @Override
+    // public void mouseEntered(MouseEvent e) {
+    //     // TODO Auto-generated method stub
+    //     throw new UnsupportedOperationException("Unimplemented method 'mouseEntered'");
+    // }
+
+    // @Override
+    // public void mouseExited(MouseEvent e) {
+    //     // TODO Auto-generated method stub
+    //     throw new UnsupportedOperationException("Unimplemented method 'mouseExited'");
+    // }
 }

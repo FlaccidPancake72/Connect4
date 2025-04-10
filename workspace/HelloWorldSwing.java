@@ -22,9 +22,14 @@ B. Rules
 		i. literally verything BUT when column is filled
 			i. can have is filled Boolean, turns true when someone puts it at the spot where i = total row 
 				a. you know this bc when u click the drop at the top of the row ur i++
+
+    V. Client stuff
+        i. in GUI
+        ii. thru a listener --> sends stuff to server thru OOS 
+        iii. want to send which place the user clicked on -- mark location where put in array send that thing 
 C. */
 
-
+/* */
 public class HelloWorldSwing {
     /**
      * Create the GUI and show it.  For thread safety,

@@ -4,7 +4,6 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -19,12 +18,12 @@ public class GameWindow {
         new GameWindow("blarg", "blorg");
     }
 
-
+ 
     public GameWindow(String redName, String blackName) {
         gameWindow = new JFrame("THE SIGMA Connect 4");
         gameWindow.setLocation(100, 100);
         gameWindow.setLayout(new BorderLayout(20,20));
-        this.board = new Board();
+        this.board = new Board(this);
         gameWindow.add(board, BorderLayout.CENTER);
         gameWindow.add(buttons(), BorderLayout.SOUTH);
         gameWindow.setMinimumSize(gameWindow.getPreferredSize());
@@ -40,8 +39,22 @@ public class GameWindow {
         private JPanel buttons() {
         JPanel buttons = new JPanel();
         buttons.setLayout(new GridLayout(1, 3, 10, 0));
+
+         final JButton d1 = new JButton("Drop here");
+
+         final JButton d2 = new JButton("Drop here");
+
+         final JButton d3 = new JButton("Drop here");
+
+         final JButton d4 = new JButton("Drop here");
         
-        final JButton quit = new JButton("Quit");
+         final JButton d5 = new JButton("Drop here");
+         
+         final JButton d6 = new JButton("Drop here");
+
+         final JButton d7 = new JButton("Drop here");
+        
+         final JButton quit = new JButton("Quit");
         
         quit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -76,6 +89,14 @@ public class GameWindow {
         
         buttons.add(nGame);
         buttons.add(quit);
+
+        buttons.add(d1); 
+        buttons.add(d2); 
+        buttons.add(d3); 
+        buttons.add(d4); 
+        buttons.add(d5); 
+        buttons.add(d6); 
+        buttons.add(d7); 
         
         buttons.setPreferredSize(buttons.getMinimumSize());
         
