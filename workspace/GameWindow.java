@@ -34,8 +34,7 @@ public class GameWindow {
             System.out.println("Listening on port " + LISTENING_PORT);
             while (true) {
                 Socket s = listener.accept();
-                ConnectionHandler handler = new ConnectionHandler(s, num);
-                num++; 
+                ConnectionHandler handler = new ConnectionHandler(s);
                 handler.start();
                 connections.add(handler);
             }
@@ -54,11 +53,9 @@ public class GameWindow {
         Socket client;
         private ObjectOutputStream os;
         private ObjectInputStream is;
-        int num;
         
-        ConnectionHandler(Socket socket, int num) {
-            client = socket;
-            this.num = num; 
+        ConnectionHandler(Socket socket) {
+            client = socket;           
             try {
             //set up your streams, make sure this order is reversed on the client side!
                 os = new ObjectOutputStream(socket.getOutputStream());
@@ -84,13 +81,19 @@ public class GameWindow {
         public void run() {
             while(client.isConnected()) {
             try {
-            String input= (String)is.readObject();
+                String red;
+                if(isRed) {
+                    red = "t"; 
+                } else { 
+                    red = "f";
+                }
+            String input = ;
             //your code to send messages goes here.
             if(input!= null) {
             for(ConnectionHandler handler: connections) {
             //make sure you don't try to access the handler from two different threads simultainously
             synchronized(handler) {
-            handler.send(num + ": " + input);
+            handler.send(input);
             }
             }
             }
@@ -150,7 +153,7 @@ public class GameWindow {
 
         /* 
          *         this.board = new Board(this);
-        JPanel boardPanel = new JPanel();
+            JPanel boardPanel = new JPanel();
         boardPanel.setLayout(null);
         boardPanel.setPreferredSize(board.getPreferredSize());
         boardPanel.add(board);
@@ -181,10 +184,9 @@ public class GameWindow {
         gameWindow.setVisible(true);
         gameWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
-    
 
-    private int xLoc = 0; 
-    private boolean isRed = false; 
+    private static int xLoc = 0; 
+    private static boolean isRed = true; 
     // Helper function to create data panel
         private JPanel buttons() {
         JPanel buttons = new JPanel();
@@ -213,6 +215,7 @@ public class GameWindow {
 			public void actionPerformed (ActionEvent e) { 
                 xLoc = 1; 
                 isRed = !isRed; 
+                System.out.println("button 1 clicked");
 			}
 		}); 
 
@@ -220,7 +223,8 @@ public class GameWindow {
 			@Override
 			public void actionPerformed (ActionEvent e) { 
                 xLoc = 2; 
-                isRed = !isRed; 
+                isRed = !isRed;
+                System.out.println("button 2 clicked"); 
 			}
 		}); 
 
@@ -229,6 +233,7 @@ public class GameWindow {
 			public void actionPerformed (ActionEvent e) { 
                 xLoc = 3;
                 isRed = !isRed; 
+                System.out.println("button 3 clicked");
 			}
 		}); 
         
@@ -237,6 +242,7 @@ public class GameWindow {
 			public void actionPerformed (ActionEvent e) { 
                 xLoc = 4; 
                 isRed = !isRed; 
+                System.out.println("button 4 clicked");
 			}
 		}); 
         
@@ -245,6 +251,7 @@ public class GameWindow {
 			public void actionPerformed (ActionEvent e) { 
                 xLoc = 5; 
                 isRed = !isRed; 
+                System.out.println("button 5 clicked");
 			}
 		}); 
 
@@ -253,6 +260,7 @@ public class GameWindow {
 			public void actionPerformed (ActionEvent e) { 
                 xLoc = 6; 
                 isRed = !isRed; 
+                System.out.println("button 6 clicked");
 			}
 		}); 
 
@@ -261,8 +269,14 @@ public class GameWindow {
 			public void actionPerformed (ActionEvent e) { 
                 xLoc = 7; 
                 isRed = !isRed; 
+                System.out.println("button 7 clicked");
 			}
 		}); 
+
+        System.out.println(xLoc);
+        System.out.println(isRed);
+
+
         
         return buttons;
     }
