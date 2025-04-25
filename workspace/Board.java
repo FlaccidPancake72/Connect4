@@ -18,10 +18,10 @@ import javax.swing.*;
 public class Board extends JPanel { 
 
 	// Logical and graphical representations of board
-	private final Square[][] board;
-    private final int row = 6;
-	private	final int col = 7;
-	private final GameWindow g;
+	public final Square[][] board;
+    public final int row = 6;
+	public	final int col = 7;
+	public final GameWindow g;
 
 
 	public Board(GameWindow g) {

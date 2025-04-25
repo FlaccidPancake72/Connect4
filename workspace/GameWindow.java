@@ -83,11 +83,11 @@ public class GameWindow {
             try {
                 String red;
                 if(isRed) {
-                    red = "t"; 
+                    red = "f"; 
                 } else { 
-                    red = "f";
+                    red = "t";
                 }
-            String input = ;
+            String input = red + xLoc;
             //your code to send messages goes here.
             if(input!= null) {
             for(ConnectionHandler handler: connections) {
@@ -281,3 +281,4 @@ public class GameWindow {
         return buttons;
     }
 }
+

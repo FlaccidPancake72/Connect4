@@ -25,90 +25,101 @@ public class SocketClient {
 *  ****HINT**** you may wish to have a thread be in charge of sending information 
 *  and another thread in charge of receiving information.
 */
-    public static void main(String[] args) throws UnknownHostException, IOException, ClassNotFoundException, InterruptedException{
-        //get the localhost IP address, if server is running on some other IP, you need to use that
-        InetAddress host = InetAddress.getLocalHost();
-        final Socket socket = new Socket(host.getHostName(), 9876);
-		System.out.println("client connected");
-		final ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+public static void SocketClient() throws UnknownHostException, IOException, ClassNotFoundException, InterruptedException{
+	//get the localhost IP address, if server is running on some other IP, you need to use that
+	InetAddress host = InetAddress.getLocalHost();
+	final Socket socket = new Socket(host.getHostName(), 9876);
+	System.out.println("client connected");
+	final ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
 
-		// write to socket using ObjectOutputStream
-		ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+	// write to socket using ObjectOutputStream
+	ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
 
-        //gui stuff
-        JFrame frame = new JFrame("server");
-        frame.setLayout(new GridLayout(3,1));
-        JTextField input = new JTextField(25);
-        frame.add(input);
-        JTextArea message = new JTextArea("", 100, 150);
-        message.setEditable(false);
-        frame.add(message);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
+	Thread thread = new Thread() {
+		public void run() {
+			while (true) {
+				try {
+					String input = (String) ois.readObject(); //t0
+					System.out.println("message received");
+					//System.out.println("received " + input);
+					if (input != null) {
 
-		Thread thread = new Thread() {
-			public void run() {
-				while (true) {
-					try {
-						String input = (String) ois.readObject();
-						System.out.println("message received");
-						//System.out.println("received " + input);
-						if (input != null) {
-							//oos.writeObject(input);
-							message.setText(message.getText() + "\n" + input);
-							frame.repaint();
+						//the y value for each row 
+						int[] rows = new int[6]
+						for(int i = 0; i < rows.length; i++)
+						{
+							rows[i] = 0;
 						}
-					} catch (ClassNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+
+						String str = input.substring(1);
+						int strNum = (int) str;
+							
+						r = rows[strNum];
+						r++;
+						rows[strNum] = r;
+
+						
+						if(input.substring(0,1).equals("t")) {
+							//this stuff is red.... 
+							this.Board[strNum][r].setColor("red"); 
+					
+						} else { 
+							this.Board[strNum][r].setColor("black");
+							//is black 
+						}
+						//oos.writeObject(input);
+						//message.setText(message.getText() + "\n" + input);
+						//frame.repaint();
 					}
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 			}
-		};
+		}
+	};
 
-		thread.start();
-    	input.addActionListener(new ActionListener() {
-    		@Override
-    		public void actionPerformed(ActionEvent e) {
-                String text = input.getText();
-                try {
-					oos.writeObject(text);
-					System.out.println("sent "+text);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-                input.setText(""); 
-            }
-    	});
-    	
-    	// closes the window when you exit.
-    	frame.addWindowListener((WindowListener) new WindowAdapter()
-        {
-           public void windowClosing(WindowEvent e)
-           {
-              if(socket.isConnected())
-				try {
-					oos.writeObject("exit");
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-              try {
-                   Thread.sleep(1000); // Time for DisconnectMessage to actually be sent.
-               }
-               catch (InterruptedException e1) {
-               } 
-             //close resources
-             System.exit(0); 
-           }
-        });
-       // System.out.println((String)ois.readObject());
-        
-    }
+	thread.start();
+	/*input.addActionListener(new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			String text = input.getText();
+			try {
+				oos.writeObject(text);
+				System.out.println("sent "+text);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			input.setText(""); 
+		}
+	});*/
+	
+	// closes the window when you exit.
+	/*frame.addWindowListener((WindowListener) new WindowAdapter()
+	{
+	   public void windowClosing(WindowEvent e)
+	   {
+		  if(socket.isConnected())
+			try {
+				oos.writeObject("exit");
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		  try {
+			   Thread.sleep(1000); // Time for DisconnectMessage to actually be sent.
+		   }
+		   catch (InterruptedException e1) {
+		   } 
+		 //close resources
+		 System.exit(0); 
+	   }
+	});*/
+   // System.out.println((String)ois.readObject());
+	
 }
-
+}
